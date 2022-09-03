@@ -15,3 +15,6 @@ wireguard_logs_conf: true
 wireguard_peers: 3
 wireguard_peer_dns: 'auto'
 wireguard_container_restart: 'unless-stopped'
+
+wireguard_dir_state: 'directory'
+wireguard_container_state: 'present'
