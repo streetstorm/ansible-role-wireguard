@@ -20,6 +20,10 @@
     project_src: "{{ wireguard_path }}"
     state: present
 
+- name: Wireguard | Wait until the file peer1.conf is present before continuing
+  ansible.builtin.wait_for:
+    path: "{{ wireguard_path }}/config/peer{{ wireguard_peers }}/peer{{ wireguard_peers }}.conf"
+
 - name: Wireguard | fetch client config
   ansible.builtin.fetch:
     src: "{{ wireguard_path }}/config/peer{{ item }}/peer{{ item }}.conf"
