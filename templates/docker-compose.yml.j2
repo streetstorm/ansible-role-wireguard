@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  {{ wireguard_docker_name }}:
+    container_name: {{ wireguard_docker_name }}
+    image: {{ wireguard_image_name }}
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=${UID}
+      - PGID=${GID}
+      - TZ={{ wireguard_tz }}
+      - SERVERURL={{ wireguard_server_url }}
+      - SERVERPORT={{ wireguard_port }}
+      - PEERS={{ wireguard_peers }}
+      - PEERDNS={{ wireguard_peer_dns }}
+      - INTERNAL_SUBNET={{ wireguard_internal_subnet }}
+      - ALLOWEDIPS={{ wireguard_allowedips }}
+      - LOG_CONFS={{ wireguard_logs_conf }}
+    volumes:
+      - {{ wireguard_path }}/config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - {{ wireguard_port }}:{{ wireguard_port }}/{{ wireguard_proto }}
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: {{ wireguard_container_restart }}
