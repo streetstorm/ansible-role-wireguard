@@ -1,5 +1,6 @@
 ---
 # defaults file for ansible-role-wireguard
+wireguard_user: "wireguard"
 wireguard_path: "/opt/wireguard"
 
 wireguard_docker_name: "wireguard"

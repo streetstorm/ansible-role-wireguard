@@ -1,13 +1,17 @@
 ---
 # tasks file for ansible-role-wireguard
+- name: Wireguard | Add standart ssh user
+  ansible.builtin.user:
+    name: "{{ wireguard_user }}"
+  register: wireguard_created_users
+
 - name: Wireguard | Ensure all directories exists
   ansible.builtin.file:
     path: "{{ item }}"
     state: "{{ wireguard_dir_state }}"
     mode: 0700
-    owner: "{{ ansible_user_id }}"
-    group: "{{ ansible_user_id }}"
-  become: true
+    owner: "{{ wireguard_created_users.name }}"
+    group: "{{ wireguard_created_users.name }}"
   with_items:
     - "{{ wireguard_path }}"
     - "{{ wireguard_path }}/config"
@@ -16,10 +20,9 @@
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ wireguard_path }}/docker-compose.yml"
-    owner: "{{ ansible_user_id }}"
-    group: "{{ ansible_user_id }}"
+    owner: "{{ wireguard_created_users.name }}"
+    group: "{{ wireguard_created_users.name }}"
     mode: 0644
-  become: true
 
 - name: Wireguard | Run Wireguard
   docker_compose:

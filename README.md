@@ -14,6 +14,7 @@ Role Variables
 --------------
 
 ```bash
+wireguard_user: "wireguard"
 wireguard_path: "/opt/wireguard"
 
 wireguard_docker_name: "wireguard"
@@ -29,6 +30,9 @@ wireguard_logs_conf: true
 wireguard_peers: 3
 wireguard_peer_dns: 'auto'
 wireguard_container_restart: 'unless-stopped'
+
+wireguard_dir_state: 'directory'
+wireguard_container_state: 'present'
 ```
 
 Example Playbook

@@ -8,8 +8,8 @@ services:
       - NET_ADMIN
       - SYS_MODULE
     environment:
-      - PUID={{ ansible_user_uid }}
-      - PGID={{ ansible_user_gid }}
+      - PUID={{ wireguard_created_users.uid }}
+      - PGID={{ wireguard_created_users.group }}
       - TZ={{ wireguard_tz }}
       - SERVERURL={{ wireguard_server_url }}
       - SERVERPORT={{ wireguard_port }}
